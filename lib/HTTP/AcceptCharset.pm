@@ -2,7 +2,7 @@ package HTTP::AcceptCharset;
 
 # ABSTRACT: Parse the HTTP header 'Accept-Charset'
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use Moo;
 use List::Util qw(first);
