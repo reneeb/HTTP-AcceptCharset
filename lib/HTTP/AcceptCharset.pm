@@ -5,7 +5,6 @@ package HTTP::AcceptCharset;
 our $VERSION = '0.01';
 
 use Moo;
-use HTTP::Headers;
 use List::Util qw(first);
 
 has string => ( is => 'ro', required => 1 );
