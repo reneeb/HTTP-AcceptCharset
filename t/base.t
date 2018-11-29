@@ -11,7 +11,7 @@ my %tests = (
     'all' => {
         header  => '*',
         values  => [qw/*/],
-        ok      => [qw/utf-8 iso-8859-1/],
+        ok      => [qw/utf-8 iso-8859-1 UTF-8 Utf-8/],
         checks  => [
             [
                 [qw/iso-8859-1 utf-8/],
@@ -107,6 +107,25 @@ my %tests = (
             ],
         ],
     },
+    'emtpy string' => {
+        header  => '',
+        values  => [qw//],
+        ok      => [qw/utf-8 iso-8859-1 UTF-8 Utf-8/],
+        checks  => [
+            [
+                [qw/iso-8859-1 utf-8/],
+                'iso-8859-1',
+            ],
+            [
+                [qw/iso-8859-1 utf-16/],
+                'iso-8859-1',
+            ],
+            [
+                [qw/iso-8859-2 utf-16/],
+                'iso-8859-2',
+            ],
+        ],
+    },
 );
 
 for my $name ( sort keys %tests ) {
@@ -124,7 +143,7 @@ for my $name ( sort keys %tests ) {
     is $obj->match(), '', "Empty param list ($name)";
 
     for my $ok_check ( @{ $test->{ok} || [] } ) {
-        is $obj->match( $ok_check ), $ok_check, "Is: $name -> $ok_check";
+        is $obj->match( $ok_check ), lc $ok_check, "Is: $name -> $ok_check";
     }
 
     for my $nok_check ( @{ $test->{nok} || [] } ) {
