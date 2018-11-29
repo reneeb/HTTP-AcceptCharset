@@ -13,11 +13,16 @@ has values => ( is => 'ro', lazy => 1, default => \&_parse_string );
 sub match {
     my ($self, @values_to_check) = @_;
 
+    @values_to_check =
+        map{ lc $_ }
+        grep{ defined $_ && length $_ }
+        @values_to_check;
+
     return '' if !@values_to_check;
-    return '' if !defined $values_to_check[0];
 
     my @charsets = @{ $self->values || [] };
     return $values_to_check[0] if !@charsets;
+
 
     CHARSET:
     for my $charset ( @charsets ) {
