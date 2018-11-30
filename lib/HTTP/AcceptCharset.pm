@@ -36,12 +36,12 @@ sub match {
 }
 
 around BUILDARGS => sub {
-  my ($orig, $class, @args) = @_;
+    my ($orig, $class, @args) = @_;
  
-  return { string => $args[0] }
-    if @args == 1 && !ref $args[0];
+    return { string => $args[0] }
+        if @args == 1 && !ref $args[0];
  
-  return $class->$orig(@args);
+    return $class->$orig(@args);
 };
 
 sub _parse_string {
@@ -84,13 +84,13 @@ The header string as passed to C<new>.
 
 The given charset in the prioritized order.
 
-  Header                    | Values
-  --------------------------+----------------------------
-  utf-8, iso-8859-1;q=0.5   | utf-8, iso-8859-1
-  iso-8859-1;q=0.5, utf-8   | utf-8, iso-8859-1
-  utf-8                     | utf-8
-  utf-8, *                  | utf-8, *
-  utf-8;q=0.2, utf-16;q=0.5 | utf-16, utf-8
+    Header                    | Values
+    --------------------------+----------------------------
+    utf-8, iso-8859-1;q=0.5   | utf-8, iso-8859-1
+    iso-8859-1;q=0.5, utf-8   | utf-8, iso-8859-1
+    utf-8                     | utf-8
+    utf-8, *                  | utf-8, *
+    utf-8;q=0.2, utf-16;q=0.5 | utf-16, utf-8
 
 =head1 METHODS
 
