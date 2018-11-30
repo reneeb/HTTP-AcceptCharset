@@ -47,7 +47,7 @@ around BUILDARGS => sub {
 sub _parse_string {
     my ($self) = @_;
 
-    my @charsets = split /\s*,\s*/, $self->string;
+    my @charsets = split /\s*,\s*/, $self->string // '';
     my %weighted;
 
     for my $charset ( @charsets ) {
