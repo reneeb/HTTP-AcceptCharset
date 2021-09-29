@@ -14,22 +14,22 @@ sub match {
     my ($self, @values_to_check) = @_;
 
     @values_to_check =
-        map{ lc $_ }
+        map{ [ $_, lc $_ ] }
         grep{ defined $_ && length $_ }
         @values_to_check;
 
     return '' if !@values_to_check;
 
     my @charsets = @{ $self->values || [] };
-    return $values_to_check[0] if !@charsets;
-
+    return $values_to_check[0][0] if !@charsets;
 
     CHARSET:
     for my $charset ( @charsets ) {
-        return $values_to_check[0] if $charset eq '*';
+        return $values_to_check[0][0] if $charset eq '*';
 
-        my $found = first { $_ eq $charset }@values_to_check;
-        return $found if $found;
+        my $c = lc $charset;
+        my $found = first { $_->[1] eq $c } @values_to_check;
+        return $found->[0] if $found;
     }
 
     return '';
