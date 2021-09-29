@@ -107,6 +107,26 @@ my %tests = (
             ],
         ],
     },
+    'different cases' => {
+        header  => 'Iso-8859-1;q=0.5, Utf-8',
+        values  => [qw/Utf-8 Iso-8859-1/],
+        ok      => [qw/isO-8859-1 utF-8/],
+        nok     => [qw/iso-8859-2/],
+        checks  => [
+            [
+                [qw/iSo-8859-1 uTf-8/],
+                'uTf-8'
+            ],
+            [
+                [qw/isO-8859-1 utF-16/],
+                'isO-8859-1'
+            ],
+            [
+                [qw/IsO-8859-2 UtF-16/],
+                '',
+            ],
+        ],
+    },
     'emtpy string' => {
         header  => '',
         values  => [qw//],
@@ -162,7 +182,7 @@ for my $name ( sort keys %tests ) {
     is $obj->match(), '', "Empty param list ($name)";
 
     for my $ok_check ( @{ $test->{ok} || [] } ) {
-        is $obj->match( $ok_check ), lc $ok_check, "Is: $name -> $ok_check";
+        is $obj->match( $ok_check ), $ok_check, "Is: $name -> $ok_check";
     }
 
     for my $nok_check ( @{ $test->{nok} || [] } ) {
